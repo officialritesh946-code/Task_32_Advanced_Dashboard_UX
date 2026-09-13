@@ -25,10 +25,6 @@ This repository contains the prepared dataset, DAX measures, Power BI theme and 
 | `07_PowerBI_Build_Guide.txt` | Complete page/model/navigation specification |
 | `08_Task32_Project_Report.docx` | Professional project report |
 
-## Power BI
-Open Power BI Desktop and load the three CSV files. Create the Date table using the DAX provided, establish relationships, then build the four pages described in the build guide.
-
-> Note: the `.pbix` file itself must be saved from Power BI Desktop. The supplied files are designed to make that final build fast and reproducible.
 
 ## Data validation snapshot
 - Transaction rows: 10,194
