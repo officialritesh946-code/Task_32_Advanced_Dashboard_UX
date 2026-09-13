@@ -1,0 +1,96 @@
+-- TASK 32 | ADVANCED DASHBOARD UX
+-- Paste these measures into the Orders table in Power BI.
+-- Recommended model: Orders (fact), Date (dimension), People (lookup), Returns (lookup).
+
+Total Sales = SUM(Orders[Sales])
+
+Total Profit = SUM(Orders[Profit])
+
+Profit Margin = DIVIDE([Total Profit], [Total Sales])
+
+Total Orders = DISTINCTCOUNT(Orders[Order ID])
+
+Total Customers = DISTINCTCOUNT(Orders[Customer ID])
+
+Units Sold = SUM(Orders[Quantity])
+
+Average Order Value = DIVIDE([Total Sales], [Total Orders])
+
+Average Discount = AVERAGE(Orders[Discount])
+
+Returned Orders =
+CALCULATE(
+    DISTINCTCOUNT(Returns[Order ID])
+)
+
+Return Rate =
+DIVIDE(
+    [Returned Orders],
+    [Total Orders]
+)
+
+Sales LY =
+CALCULATE(
+    [Total Sales],
+    DATEADD('Date'[Date], -1, YEAR)
+)
+
+Sales YoY % =
+DIVIDE(
+    [Total Sales] - [Sales LY],
+    [Sales LY]
+)
+
+Profit LY =
+CALCULATE(
+    [Total Profit],
+    DATEADD('Date'[Date], -1, YEAR)
+)
+
+Profit YoY % =
+DIVIDE(
+    [Total Profit] - [Profit LY],
+    [Profit LY]
+)
+
+Selected Region Sales =
+IF(
+    ISINSCOPE(Orders[Region]),
+    [Total Sales],
+    BLANK()
+)
+
+Ship Days Avg = AVERAGE(Orders[Ship Days])
+
+-- Date table
+Date =
+ADDCOLUMNS(
+    CALENDAR(
+        MIN(Orders[Order Date]),
+        MAX(Orders[Order Date])
+    ),
+    "Year", YEAR([Date]),
+    "Month Number", MONTH([Date]),
+    "Month", FORMAT([Date], "MMM"),
+    "Quarter", "Q" & FORMAT([Date], "Q"),
+    "Year Month", FORMAT([Date], "YYYY-MM")
+)
+
+-- Optional ranking measures for Top-N visuals
+Product Sales Rank =
+RANKX(
+    ALL(Orders[Product Name]),
+    [Total Sales],
+    ,
+    DESC,
+    DENSE
+)
+
+Product Profit Rank =
+RANKX(
+    ALL(Orders[Product Name]),
+    [Total Profit],
+    ,
+    DESC,
+    DENSE
+)

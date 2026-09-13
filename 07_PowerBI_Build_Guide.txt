@@ -1,0 +1,99 @@
+TASK 32 — ADVANCED DASHBOARD UX
+Power BI Build Specification
+================================
+
+1. DATA MODEL
+--------------
+Tables:
+• Orders — primary fact table
+• Returns — returned order IDs
+• People — regional owner mapping
+• Date — dedicated date dimension
+
+Relationships:
+• Date[Date] 1:* Orders[Order Date]
+• People[Region] 1:* Orders[Region]
+• Orders[Order ID] 1:* Returns[Order ID] (or use a bridge/return flag if Power BI detects a different cardinality)
+
+Mark Date as the Date table and sort Date[Month] by Date[Month Number].
+
+2. REPORT PAGES
+----------------
+PAGE 1 — Executive Overview
+Purpose: concise leadership view.
+Visuals:
+• KPI cards: Total Sales, Total Profit, Profit Margin, Orders, Return Rate
+• Line chart: Sales by Month
+• Column chart: Sales & Profit by Category
+• Bar chart: Profit by Region
+• Slicers: Year, Region, Segment
+• Navigation buttons: Overview | Performance | Products | Detail
+
+PAGE 2 — Performance Analysis
+Purpose: explain sales and profitability movement.
+Visuals:
+• Sales vs Sales LY
+• Profit vs Profit LY
+• YoY % cards
+• Monthly Sales/Profit trend
+• Region × Segment matrix
+• Discount vs Profit scatter
+• Drill-through enabled on Region
+
+PAGE 3 — Product Performance
+Purpose: identify winning and loss-making products.
+Visuals:
+• Top 10 Products by Sales
+• Top 10 Products by Profit
+• Sub-Category sales/profit comparison
+• Product detail table
+• Drill-through enabled on Product Name
+
+PAGE 4 — Drill-through Detail
+Purpose: contextual detail without overcrowding executive pages.
+Drill-through fields:
+• Region
+• Product Name
+Keep "Keep all filters" enabled.
+Visuals:
+• Selected entity KPI cards
+• Sales trend
+• Profit trend
+• Category/Sub-Category breakdown
+• Order-level detail table
+• Back button
+
+3. UX / NAVIGATION
+------------------
+• Use consistent header and page title.
+• Keep executive page visually light and decision-focused.
+• Add page navigator or buttons.
+• Add Back button to drill-through page.
+• Use tooltips for dense charts.
+• Use slicer panel instead of placing many slicers across the canvas.
+• Maintain one clear visual hierarchy: KPI → trend → drivers → detail.
+
+4. DAX
+-------
+Use 05_DAX_Measures.txt. Core measures:
+Total Sales, Total Profit, Profit Margin, Total Orders,
+Total Customers, Units Sold, Average Order Value,
+Returned Orders, Return Rate, Sales LY, Sales YoY %,
+Profit LY, Profit YoY %, ranking measures.
+
+5. VALIDATION CHECKLIST
+------------------------
+[ ] All visuals respond to Year/Region/Segment filters.
+[ ] Navigation buttons move to intended pages.
+[ ] Drill-through passes the selected Region/Product.
+[ ] Back button returns to originating page.
+[ ] KPI totals match the source data.
+[ ] Date table is marked and relationships are active.
+[ ] No unnecessary chart clutter on Executive Overview.
+[ ] Titles and number formats are executive-ready.
+[ ] Test with multiple filters before publishing.
+
+6. EXPECTED OUTCOME
+--------------------
+A multi-page executive Power BI dashboard that combines data modeling,
+DAX, navigation and drill-through into a practical decision-support experience.
